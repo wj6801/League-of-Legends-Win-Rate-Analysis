@@ -18,7 +18,11 @@ Sylas is a very popular champion that is preferred by many professional League o
 
 ### Data Cleaning
 
-From our dataset, we drop the columns we won't be using for our analysis for various reasons--some columns are all null, some are not informative, and some are redaundant. After we drop unnecessary columns, we check for null values in each column. From looking at the imported dataframe, we see that some columns are missing for the rows with 'team' position that are not missing in non-'team' positions. The non-'team' positions are positions of players, which are 'top', 'jng,' 'mid', 'bot', and 'sup'. The 'player' rows are largely missing some team statistics like how many dragons, towers, and heralds they got as a team. On the other hand, the 'team' rows are missing individual statistics like who got the first blood and its victim. Many of the columns in 'team' rows are the sum of 5 players ' statistics for the columns. To carry out the analysis to answer our question, we will incorporate the team statistics in the missing columns for player rows. After we merge players statistics with team statistics, we have a dataframe with both player and team statistics. However, looking at the dataframe, we see some columns should be boolean but aren't. Columns with 'first' keywords seem to indicate 'yes' and 'no' as their only values are 0 and 1, indicating it happened or didn't. Therefore, we convert these columns to boolean values.
+From our dataset, we drop the columns we won't be using for our analysis for various reasons--some columns are all null, some are not informative, and some are redaundant. 
+
+After we drop unnecessary columns, we check for null values in each column. From looking at the imported dataframe, we see that some columns are missing for the rows with 'team' position that are not missing in non-'team' positions. The non-'team' positions are positions of players, which are 'top', 'jng,' 'mid', 'bot', and 'sup'. The 'player' rows are largely missing some team statistics like how many dragons, towers, and heralds they got as a team. On the other hand, the 'team' rows are missing individual statistics like who got the first blood and its victim. Many of the columns in 'team' rows are the sum of 5 players ' statistics for the columns. To carry out the analysis to answer our question, we will incorporate the team statistics in the missing columns for player rows. 
+
+After we merge players statistics with team statistics, we have a dataframe with both player and team statistics. However, looking at the dataframe, we see some columns should be boolean but aren't. Columns with 'first' keywords seem to indicate 'yes' and 'no' as their only values are 0 and 1, indicating it happened or didn't. Therefore, we convert these columns to boolean values.
 
 
 
@@ -34,7 +38,7 @@ From our dataset, we drop the columns we won't be using for our analysis for var
 
 ### Univariate Analysis
 
-<iframe src="assets/all_winrates.html" width=800 height=600 frameBorder=0></iframe>
+<iframe src="./assets/all_winrates.html" width=800 height=600 frameBorder=0></iframe>
 
 ---
 
