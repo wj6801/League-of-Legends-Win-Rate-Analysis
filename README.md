@@ -38,7 +38,19 @@ After we merge players statistics with team statistics, we have a dataframe with
 
 ### Univariate Analysis
 
-<iframe src="./assets/all_winrates.html" width=1200 height=600 frameBorder=0></iframe>
+<iframe src="./assets/number_of_games" width=1200 height=600 frameBorder=0></iframe>
+As we can see from the graph, Sylas was played in 1608 games, providing us with sufficient number of games to analyze. We also notice that some champions are preferred or played a lot more than others from the graph trend.
+
+<iframe src="./assets/sylas_overall_wr" width=600 height=600 frameBorder=0></iframe>
+Sylas has a decent overall winrate of 51.4% throughout all competitive games in 2022.
+
+
+### Bivariate Analysis
+
+<iframe src="./assets/dpm_vs_kills" width=1200 height=600 frameBorder=0></iframe>
+Plotting dpm against kills, we can find the trend that higher dpm is correlated with more kills, meaning when the champion does a lot of damage in a game, the champion is likely to have more kills.
+
+
 
 ---
 
