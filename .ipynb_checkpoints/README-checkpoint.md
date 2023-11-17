@@ -38,7 +38,7 @@ After we merge players statistics with team statistics, we have a dataframe with
 
 ### Univariate Analysis
 
-<iframe src="./assets/all_winrates.html" width=2000 height=600 frameBorder=0></iframe>
+<iframe src="./assets/all_winrates.html" width=1500 height=600 frameBorder=0></iframe>
 
 ---
 
