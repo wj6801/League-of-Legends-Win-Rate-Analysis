@@ -34,7 +34,7 @@ From our dataset, we drop the columns we won't be using for our analysis for var
 
 ### Univariate Analysis
 
-<iframe src="assets/all_winrate.html" width=800 height=600 frameBorder=0></iframe>
+<iframe src="assets/all_winrates.html" width=800 height=600 frameBorder=0></iframe>
 
 ---
 
