@@ -8,6 +8,11 @@ by WonJae Lee (wolee@ucsd.edu)
 
 ## Introduction
 
+Our dataset consists of professional competitive games of League of Legends in 2022. For each game, there are 12 rows, 5 player rows from each team that contain statistics for each player and 2 team rows that contain statistics for each team. Each row contains information about various statistics to assess the performance of the player or team using objectives (towers, dragons, barons, heralds) and combat and overall statistics like kills, assists, deaths, gold earned as well as their information like team name, player name, and champion played. There are 123 columns containing such statistics, and 149400 rows.
+ 
+League of Legends players may be interested in matchup statistics (i.e. the win rate of a champion against a specific champion). Knowing such statistic will allow them to pick the right champions to facilitate their victory in games or they will have better understanding of a matchup when watching professional competitive games, especially at times like this when Worlds is going on. We will look at one specific champion for such analysis: **Sylas**.
+
+Sylas is a very popular champion that is preferred by many professional League of Legends players for its capability for playmaking. Does Sylas perform consistently well against certain champions or does his win rate mostly remains constant against all champions?
 
 ---
 
