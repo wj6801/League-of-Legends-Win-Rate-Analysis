@@ -24,7 +24,7 @@ After we drop unnecessary columns, we check for null values in each column. From
 
 After we merge players statistics with team statistics, we have a dataframe with both player and team statistics. However, looking at the dataframe, we see some columns should be boolean but aren't. Columns with 'first' keywords seem to indicate 'yes' and 'no' as their only values are 0 and 1, indicating it happened or didn't. Therefore, we convert these columns to boolean values.
 
-
+This is our cleaned dataset:
 
 
 | gameid                | date_x              |   game_x |   patch_x | side   | position_x   | playername_x   | teamname_x               | champion_x   | ban1_x   | ban2_x   | ban3_x   | ban4_x   | ban5_x   |   gamelength_x |   result_x |   kills_x |   deaths_x |   assists_x |   teamkills_x |   teamdeaths_x |   doublekills_x |   triplekills_x |   quadrakills_x |   pentakills_x | firstblood_x   | firstbloodkill_x   | firstbloodassist_x   | firstbloodvictim_x   |   team kpm_x |   ckpm_x |   barons_x |   inhibitors_x |   damagetochampions_x |   dpm_x |   damageshare_x |   damagetakenperminute_x |   damagemitigatedperminute_x |   wardsplaced_x |   wpm_x |   wardskilled_x |   wcpm_x |   controlwardsbought_x |   visionscore_x |   vspm_x |   totalgold_x |   earnedgold_x |   earned gpm_x |   earnedgoldshare_x |   goldspent_x |   total cs_x |   minionkills_x |   monsterkills_x |   cspm_x |   goldat10_x |   xpat10_x |   csat10_x |   golddiffat10_x |   xpdiffat10_x |   csdiffat10_x |   killsat10_x |   assistsat10_x |   deathsat10_x |   goldat15_x |   xpat15_x |   csat15_x |   golddiffat15_x |   xpdiffat15_x |   csdiffat15_x |   killsat15_x |   assistsat15_x |   deathsat15_x |   date |   game |   patch |   position |   playername |   teamname |   champion |   ban1 |   ban2 |   ban3 |   ban4 |   ban5 |   gamelength |   result |   kills |   deaths |   assists |   teamkills |   teamdeaths |   doublekills |   triplekills |   quadrakills |   pentakills |   firstblood |   firstbloodkill |   firstbloodassist |   firstbloodvictim |   team kpm |   ckpm |   barons |   inhibitors |   damagetochampions |   dpm |   damageshare |   damagetakenperminute |   damagemitigatedperminute |   wardsplaced |   wpm |   wardskilled |   wcpm |   controlwardsbought |   visionscore |   vspm |   totalgold |   earnedgold |   earned gpm |   earnedgoldshare |   goldspent |   total cs |   minionkills |   monsterkills |   cspm |   goldat10 |   xpat10 |   csat10 |   golddiffat10 |   xpdiffat10 |   csdiffat10 |   killsat10 |   assistsat10 |   deathsat10 |   goldat15 |   xpat15 |   csat15 |   golddiffat15 |   xpdiffat15 |   csdiffat15 |   killsat15 |   assistsat15 |   deathsat15 |   firstdragon |   dragons |   elementaldrakes |   infernals |   mountains |   clouds |   oceans |   chemtechs |   hextechs |   elders |   firstherald |   heralds |   firstbaron |   firsttower |   towers |   firstmidtower |   firsttothreetowers |   turretplates |
@@ -53,9 +53,129 @@ Plotting dpm against kills, we can find a clear trend that higher dpm is correla
 <iframe src="./assets/kills_vs_deaths.html" width=1200 height=600 frameBorder=0></iframe>
 When we plot kills against death, and we see a negative correlation, meaning when a champion has a lot of kills, it's likely that it doesn't have a lot of deaths.
 
+### Interesting Aggregates
+
+We group by champions and analyze their performance by result, kills, pentakills, dmp, and damageshare statistics. We will mainly look at result column to calculate win rates for each champion. Note that champions are designed differently so that some are strong early in the game, some are strong late in the game, and some are in between. We will mark 30 minutes as our standard for dividing early and late games. We will use champions with more than 10 games played.
+
+Theses are the top 5 highest win rate champions for games lasting less than 30 minutes (early game):
+
+| champion   |   result |    kills |   pentakills |     dpm |   damageshare |
+|:-----------|---------:|---------:|-------------:|--------:|--------------:|
+| Kha'Zix    | 0.675676 | 4.97297  |    0         | 490.364 |     0.193384  |
+| Darius     | 0.643678 | 5.54023  |    0.0229885 | 459.732 |     0.206364  |
+| Talon      | 0.636364 | 4.36364  |    0         | 427.439 |     0.177384  |
+| Sona       | 0.614035 | 0.807018 |    0         | 187.92  |     0.0815233 |
+| Kled       | 0.6      | 3.24     |    0         | 441.795 |     0.188456  |
+
+
+These are the top 5 highest win rate champions for games lasting longer than 30 minutes (late game):
+
+| champion   |   result |   kills |   pentakills |     dpm |   damageshare |
+|:-----------|---------:|--------:|-------------:|--------:|--------------:|
+| Annie      | 0.75     | 5.5     |            0 | 709.525 |      0.251561 |
+| Illaoi     | 0.7      | 3.4     |            0 | 755.309 |      0.266665 |
+| Malzahar   | 0.636364 | 2.81818 |            0 | 496.422 |      0.245004 |
+| Neeko      | 0.625    | 4.5625  |            0 | 602.367 |      0.259555 |
+| Ekko       | 0.617647 | 4.23529 |            0 | 538.918 |      0.253847 |
+
+
+Interestingly, there is no overlap among the top 5 champions for each game length. From this, we can see that different champions are strong for each game length.
+
 ---
 
 ## Assessment of Missingness
+
+### NMAR Analysis
+
+When we first looked at our data, there were a lot of missing values in a number of columns. After some EDA, we found that the statistics for banned champions was missing in all player rows but it was mostly present in team rows. Looking at the ban statistics data by league, most leagues are missing some ban data, but more popular and competitve leagues tend to have lower percentage of missing bans. Here, popular and competitive leagues refer to international competitions, where teams from each league has to qualify to play in by competing in their own leagues first, and leagues that frequently make it to Worlds. More specifically, I'm referring to Worlds, MSI, LCK, LPL, LCS, and LEC. These leagues tend to have lower missing data for bans, and it could be because they are more careful in collecting and saving league data for analysis purposes for their teams because of the popularity of League of Legends in their leagues.
+
+If we could obtain data of the popularity of each leagues, then we could shift the NMAR missingness to MAR by providing a column that ban missingness depends on.
+
+
+### Missingness Dependency
+
+**Missingness of Bans on League**
+
+Now we look at the result of the games and try to see the missingness of bans depend on league. We expect that there is some kind of dependency on league column as more popular leagues tend to do a better job including statistics.
+
+
+| league     |    missing |   not missing |
+|:-----------|-----------:|--------------:|
+| CBLOL      | 0.0197983  |    0.00826446 |
+| CBLOLA     | 0.0176991  |    0.00330579 |
+| CDF        | 0.00596831 |    0.00165289 |
+| CT         | 0.00214036 |    0          |
+| DCup       | 0.00304589 |    0.132231   |
+| DDH        | 0.017164   |    0.00165289 |
+| EBL        | 0.0150237  |    0.00826446 |
+| EL         | 0.0107018  |    0.0165289  |
+| ESLOL      | 0.0195925  |    0.0132231  |
+| EUM        | 0.0219387  |    0.00165289 |
+| GL         | 0.0141593  |    0.00661157 |
+| GLL        | 0.0162173  |    0.0198347  |
+| HC         | 0.0130891  |    0.00991736 |
+| HM         | 0.0124717  |    0.00495868 |
+| IC         | 0.00609179 |    0.00330579 |
+| LAS        | 0.0183988  |    0.0115702  |
+| LCK        | 0.0381972  |    0.00991736 |
+| LCKC       | 0.0321465  |    0.0115702  |
+| LCL        | 0.00127598 |    0.00165289 |
+| LCO        | 0.0168759  |    0.0231405  |
+| LCS        | 0.025108   |    0.00330579 |
+| LCSA       | 0.0440831  |    0.014876   |
+| LDL        | 0.0663923  |    0.447934   |
+| LEC        | 0.019963   |    0.00165289 |
+| LFL        | 0.0202511  |    0.00330579 |
+| LFL2       | 0.0197572  |    0.00330579 |
+| LHE        | 0.0192221  |    0.031405   |
+| LJL        | 0.0175756  |    0.00165289 |
+| LJLA       | 0.00312822 |    0          |
+| LLA        | 0.0153118  |    0.00330579 |
+| LMF        | 0.0251904  |    0.0429752  |
+| LPL        | 0.0641696  |    0.0214876  |
+| LPLOL      | 0.0167936  |    0.0165289  |
+| LVP SL     | 0.0201276  |    0.00165289 |
+| MSI        | 0.00658572 |    0          |
+| NEXO       | 0.0156411  |    0.00991736 |
+| NLC        | 0.0309529  |    0.0231405  |
+| PCS        | 0.0221856  |    0.00495868 |
+| PGC        | 0.0456884  |    0.0231405  |
+| PGN        | 0.0122247  |    0.00165289 |
+| PRM        | 0.029965   |    0.00991736 |
+| SL (LATAM) | 0.0133772  |    0.00826446 |
+| TAL        | 0.0166701  |    0.00826446 |
+| TCL        | 0.018193   |    0          |
+| UL         | 0.0227619  |    0.00495868 |
+| UPL        | 0.0337106  |    0.00826446 |
+| VCS        | 0.0264252  |    0.00661157 |
+| VL         | 0.01383    |    0.00661157 |
+| WLDs       | 0.0127187  |    0.00165289 |
+
+Now we plot this.
+
+<iframe src="./assets/league_by_bans.html" width=1000 height=500 frameBorder=0></iframe>
+
+<iframe src="./assets/tvd_bans_league.html" width=1000 height=500 frameBorder=0></iframe>
+
+The observed statistic is 0.5567808905345624, and the resulting p-value is 0.0, so we reject the null and conclude that the missingness of bans is dependent on league.
+
+
+**Missingness of Bans on Result**
+
+Now we try to see if the missingness of bans depend on the result of the game. We hope there is no dependency because if the missingness of bans depended on the result, it might mean lost teams didn't record their statistics for the game--very unprofessional.
+
+|   result |   missing |   not missing |
+|---------:|----------:|--------------:|
+|        0 |  0.499444 |       0.52562 |
+|        1 |  0.500556 |       0.47438 |
+
+We plot this.
+
+<iframe src="./assets/result_by_bans.html" width=1000 height=500 frameBorder=0></iframe>
+
+<iframe src="./assets/tvd_bans_result.html" width=1000 height=500 frameBorder=0></iframe>
+
+The observed statistic is 0.026175504601667843, and the resulting p-value is 0.218, so we fail to reject the null and conclude that the missingness of bans is not dependent on the result of the game.
 
 
 ---
