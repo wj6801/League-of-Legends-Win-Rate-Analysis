@@ -7,6 +7,20 @@ by WonJae Lee (wolee@ucsd.edu)
 ## Introduction
 
 Our dataset consists of professional competitive games of League of Legends in 2022. For each game, there are 12 rows, 5 player rows from each team that contain statistics for each player and 2 team rows that contain statistics for each team. Each row contains information about various statistics to assess the performance of the player or team using objectives (towers, dragons, barons, heralds) and combat and overall statistics like kills, assists, deaths, gold earned as well as their information like team name, player name, and champion played. There are 123 columns containing such statistics, and 149400 rows.
+
+
+**Description of Relevant Columns**:
+==datacompleteness==
+==league==
+==side==
+==position==
+==champion==
+==ban(1-5)==
+==gamelength==
+==result==
+==kills==
+==dpm==
+
  
 League of Legends players may be interested in matchup statistics (i.e. the win rate of a champion against a specific champion). Knowing such statistic will allow them to pick the right champions to facilitate their victory in games or they will have better understanding of a matchup when watching professional competitive games, especially at times like this when Worlds is going on. We will look at one specific champion for such analysis: **Sylas**.
 
@@ -50,7 +64,7 @@ Sylas has a decent overall winrate of 51.4% throughout all competitive games in 
 <iframe src="./assets/dpm_vs_kills.html" width=1000 height=500 frameBorder=0></iframe>
 Plotting dpm against kills, we can find a clear trend that higher dpm is correlated with more kills, meaning when the champion does a lot of damage in a game, the champion is likely to have more kills.
 
-<iframe src="./assets/kills_vs_deaths.html" width=1200 height=600 frameBorder=0></iframe>
+<iframe src="./assets/kills_vs_deaths.html" width=1000 height=500 frameBorder=0></iframe>
 When we plot kills against death, and we see a negative correlation, meaning when a champion has a lot of kills, it's likely that it doesn't have a lot of deaths.
 
 ### Interesting Aggregates
@@ -157,7 +171,7 @@ Now we plot this.
 
 <iframe src="./assets/tvd_bans_league.html" width=1000 height=500 frameBorder=0></iframe>
 
-The observed statistic is 0.5567808905345624, and the resulting p-value is 0.0, so we reject the null and conclude that the missingness of bans is dependent on league.
+The observed statistic is 0.5567808905345624, and the resulting p-value is 0.0, so we reject the null and conclude that there is enough evidence that missingness depends on league.
 
 
 **Missingness of Bans on Result**
@@ -175,12 +189,24 @@ We plot this.
 
 <iframe src="./assets/tvd_bans_result.html" width=1000 height=500 frameBorder=0></iframe>
 
-The observed statistic is 0.026175504601667843, and the resulting p-value is 0.218, so we fail to reject the null and conclude that the missingness of bans is not dependent on the result of the game.
+The observed statistic is 0.026175504601667843, and the resulting p-value is 0.218, so we fail to reject the null and conclude that there isn't enough evidence that missingness depends on result.
 
 
----
+--- 
 
 ## Hypothesis Testing
 
+**Null Hypothsis**: Sylas does not have a higher win rate against any particular champion. His win rate is independent of the enemy champion.
+
+**Alternative hypothesis**: Sylas has a higher win rate against some champions compared to others. His win rate depends on the enemy champion.
+
+**Test Statistic**: We need a way of quantifying how different two categorical distributions are, and the total variation distance (TVD) is a test statistic that describes the distance between two categorical distributions. So we will be using TVD as our test statistic.
+
+**Significance Level**: We will be using the conventional 5% significance level.
+
+
+<iframe src="./assets/tvd_hyp.html" width=1000 height=500 frameBorder=0></iframe>
+
+The observed test statistic is 0.06702736558088304, and the resulting p-value is 0.0, so we reject the null and conclude that there is enough evidence that Sylas' win rate depends on enemy champion.
 
 ---
