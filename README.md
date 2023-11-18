@@ -11,10 +11,7 @@ Our dataset consists of professional competitive games of League of Legends in 2
 
 **Description of Relevant Columns**:
 
-```
-datacompleteness
-```
-is something
+'datacompleteness' is something
 
 league
 side
