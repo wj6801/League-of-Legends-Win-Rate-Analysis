@@ -11,16 +11,20 @@ Our dataset consists of professional competitive games of League of Legends in 2
 
 **Description of Relevant Columns**:
 
-<mark>datacompleteness</mark>
-<mark>league</mark>
-<mark>side</mark>
-<mark>position</mark>
-<mark>champion</mark>
-<mark>ban(1-5)</mark>
-<mark>gamelength</mark>
-<mark>result</mark>
-<mark>kills</mark>
-<mark>dpm</mark>
+```
+datacompleteness
+```
+is something
+
+league
+side
+position
+champion
+ban(1-5)
+gamelength
+result
+kills
+dpm
 
  
 League of Legends players may be interested in matchup statistics (i.e. the win rate of a champion against a specific champion). Knowing such statistic will allow them to pick the right champions to facilitate their victory in games or they will have better understanding of a matchup when watching professional competitive games, especially at times like this when Worlds is going on. We will look at one specific champion for such analysis: **Sylas**.
