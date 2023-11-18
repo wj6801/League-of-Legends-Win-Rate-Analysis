@@ -11,17 +11,16 @@ Our dataset consists of professional competitive games of League of Legends in 2
 
 **Description of Relevant Columns**:
 
-`datacompleteness` is something
-
-league
-side
-position
-champion
-ban(1-5)
-gamelength
-result
-kills
-dpm
+`datacompleteness`: `complete` if the game data is complete `partial` if it isn't. We used only `complete` rows
+`league`: League of Legends professional league acronyms (e.g. `LCK`, `LPL`, `LCS`)
+`side`: The two teams in a game are `Blue` and `Red` sides, `Blue` being the bottom side of the map and `Red` being the upper side of the map
+`position`: Which role a player plays. There are 5 player positions: `top`, `jng`, `mid`, `bot`, `sup`. The team rows have `team` as their position values
+`champion`: Which champion a player played that game
+`ban1`, `ban2`, `ban3`, `ban4`, `ban5`: Each side can ban 5 champions every game during the champion select phase. These are banned champions for the team.
+`gamelength`: the length of the game in seconds
+`result`: `0` if the player/team lost and `1` if the player/team won
+`kills`: how many kills the player scored
+`dpm`: "damage per minute" - total damage dealt to champion divided by the game length in minutes. It is one of the most popular measures of performance of a player
 
  
 League of Legends players may be interested in matchup statistics (i.e. the win rate of a champion against a specific champion). Knowing such statistic will allow them to pick the right champions to facilitate their victory in games or they will have better understanding of a matchup when watching professional competitive games, especially at times like this when Worlds is going on. We will look at one specific champion for such analysis: **Sylas**.
